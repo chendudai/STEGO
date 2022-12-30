@@ -3,3 +3,6 @@ data/*
 src/.env
 results/predictions/*
 src/iarpa
+Wikiscenes/*
+*.xml
+*.iml

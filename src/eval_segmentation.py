@@ -74,7 +74,8 @@ def my_app(cfg: DictConfig) -> None:
             picie_cluster_probe = picie_state["cluster_probe"].module.cuda()
             picie_cluster_metrics = picie_state["cluster_metrics"]
 
-        loader_crop = "center"
+        # loader_crop = "center"
+        loader_crop = None
         test_dataset = ContrastiveSegDataset(
             pytorch_data_dir=pytorch_data_dir,
             dataset_name=model.cfg.dataset_name,
@@ -85,7 +86,7 @@ def my_app(cfg: DictConfig) -> None:
             cfg=model.cfg,
         )
 
-        test_loader = DataLoader(test_dataset, cfg.batch_size * 2,
+        test_loader = DataLoader(test_dataset, cfg.batch_size,
                                  shuffle=False, num_workers=cfg.num_workers,
                                  pin_memory=True, collate_fn=flexible_collate)
 
@@ -109,17 +110,25 @@ def my_app(cfg: DictConfig) -> None:
             # all_good_images = range(80)
             # all_good_images = [ 5, 20, 56]
             all_good_images = [11, 32, 43, 52]
+
+        elif model.cfg.dataset_name == "directory":
+            all_good_images = range(798)
+            # all_good_images = [1,2,3,4]
         else:
             raise ValueError("Unknown Dataset {}".format(model.cfg.dataset_name))
-        batch_nums = torch.tensor([n // (cfg.batch_size * 2) for n in all_good_images])
-        batch_offsets = torch.tensor([n % (cfg.batch_size * 2) for n in all_good_images])
+        batch_nums = torch.tensor([n // (cfg.batch_size) for n in all_good_images])
+        batch_offsets = torch.tensor([n % (cfg.batch_size) for n in all_good_images])
 
         saved_data = defaultdict(list)
         with Pool(cfg.num_workers + 5) as pool:
             for i, batch in enumerate(tqdm(test_loader)):
                 with torch.no_grad():
+
                     img = batch["img"].cuda()
                     label = batch["label"].cuda()
+                    # img = batch["img"]
+                    # label = batch["label"]
+
 
                     feats, code1 = par_model(img)
                     feats, code2 = par_model(img.flip(dims=[3]))

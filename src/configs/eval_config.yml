@@ -1,17 +1,26 @@
 output_root: '../'
-pytorch_data_dir: '/datadrive/pytorch-data/'
-experiment_name: "cocostuff"
-res: 320
-batch_size: 8
-num_workers: 24
+#pytorch_data_dir: '/datadrive/pytorch-data/'
+pytorch_data_dir: '/storage/chendudai/data/STEGO/'
+experiment_name: "exp1_11classes_799steps"
+res: 512
+batch_size: 2
+num_workers: 0
 run_picie: True
 run_crf: True
 run_prediction: True
 dark_mode: True
 use_ddp: False
+#dataset_name: "directory"
 
 model_paths:
-  - "../saved_models/cocostuff27_vit_base_5.ckpt"
+#  - "../checkpoints/chen/directory_exp1_3classes_date_Dec19_09-28-52/epoch=15-step=799.ckpt"
+#  - "../checkpoints/chen/directory_exp1_2classes_date_Dec19_08-41-19/epoch=7-step=399.ckpt"
+#  - "../checkpoints/chen/directory_exp1_4classes_date_Dec19_07-19-22/epoch=16-step=799.ckpt"
+  - "../checkpoints/chen/directory_exp1_11classes_date_Dec20_07-43-26/epoch=15-step=799.ckpt"
+# - "../checkpoints/chen/directory_exp1_5classes_date_Dec19_10-04-03/epoch=15-step=799.ckpt"
+#  - "../checkpoints/chen/directory_exp1_6classes_date_Dec19_10-33-44/epoch=15-step=799.ckpt"
+#  - "../checkpoints/chen/directory_exp1_date_Dec18_07-56-15/epoch=2-step=119.ckpt"
+#  - "../saved_models/cocostuff27_vit_base_5.ckpt"
   #- "../saved_models/cityscapes_vit_base_1.ckpt"
   #- "../saved_models/potsdam_test.ckpt"
 

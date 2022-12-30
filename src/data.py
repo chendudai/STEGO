@@ -84,6 +84,8 @@ class DirectoryDataset(Dataset):
         self.target_transform = target_transform
 
         self.img_files = np.array(sorted(os.listdir(self.img_dir)))
+
+
         assert len(self.img_files) > 0
         if os.path.exists(join(self.dir, "labels")):
             self.label_files = np.array(sorted(os.listdir(self.label_dir)))
